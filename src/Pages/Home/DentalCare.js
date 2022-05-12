@@ -19,7 +19,7 @@ const DentalCare = () => {
             here', making it look like readable English. Many desktop publishing
             packages and web page
           </p>
-          <PrimaryButton></PrimaryButton>
+          <PrimaryButton>Get Started</PrimaryButton>
         </div>
       </div>
     </div>
