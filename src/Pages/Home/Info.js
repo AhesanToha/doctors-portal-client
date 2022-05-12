@@ -5,7 +5,6 @@ import marker from "../../assets/icons/marker.svg";
 import phone from "../../assets/icons/phone.svg";
 
 const Info = () => {
-
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
       <InfoCard
@@ -17,7 +16,7 @@ const Info = () => {
       <InfoCard
         cardTittle="Visit Our Location"
         cardBody="Brooklyn, NY 10036, United States"
-        bgClass="bg-accent"
+        bgClass="bg-neutral"
         img={marker}
       ></InfoCard>
       <InfoCard

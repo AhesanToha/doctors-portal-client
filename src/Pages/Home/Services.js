@@ -14,14 +14,14 @@ const Services = () => {
       img: flouride,
     },
     {
-      _id: 1,
+      _id: 2,
       name: "Fluoride Treatment",
       description:
         "Lorem Ipsum is simply dummy printing and typesetting indust Ipsum has been the",
       img: cavity,
     },
     {
-      _id: 1,
+      _id: 3,
       name: "Fluoride Treatment",
       description:
         "Lorem Ipsum is simply dummy printing and typesetting indust Ipsum has been the",
