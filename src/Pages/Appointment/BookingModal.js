@@ -24,7 +24,7 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
           <h3 className="font-bold text-lg">{name}</h3>
           <form
             onSubmit={handleBooking}
-            classNameName="grid grid-cols-1 gap-3 justify-items-center mt-3 "
+            className="grid grid-cols-1 gap-3 justify-items-center mt-3 "
           >
             <input
               type="text"
@@ -34,7 +34,7 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
             />
             <select name="slot" className="select select-bordered w-full max-w-lg">
               {slots.map((slot) => (
-                <option value={slot}>{slot}</option>
+                <option  value={slot}>{slot}</option>
               ))}
             </select>
             <input

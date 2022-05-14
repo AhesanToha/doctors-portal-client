@@ -21,7 +21,7 @@ const Booking = ({ booking, setTreatment }) => {
             htmlFor="booking-modal"
             disabled={slots.length === 0}
             onClick={() => setTreatment(booking)}
-            className="btn btn-secondary text-white uppercase"
+            className="btn btn-sm btn-secondary text-white uppercase"
           >
             Book Appointment
           </label>
