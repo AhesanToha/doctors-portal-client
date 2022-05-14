@@ -1,11 +1,11 @@
 import React from "react";
 
-const Booking = ({ booking }) => {
+const Booking = ({ booking, setTreatment }) => {
   const { name, slots } = booking;
   return (
-    <div class="card w-96 bg-base-100 shadow-xl">
-      <div class="card-body text-center">
-        <h2 class="card-title text-secondary mx-auto">{name}</h2>
+    <div className="card w-[85%]  bg-base-100 shadow-xl">
+      <div className="card-body text-center">
+        <h2 className="card-title text-secondary mx-auto">{name}</h2>
         <p className="text-sm">
           {slots.length ? (
             <span className="font-bold ">{slots[0]}</span>
@@ -16,10 +16,15 @@ const Booking = ({ booking }) => {
         <p className="uppercase text-sm">
           {slots.length} {slots.length < 1 ? "space " : "spaces "} available
         </p>
-        <div class="card-actions justify-center">
-          <button disabled={slots.length === 0} class="btn btn-secondary text-white uppercase">
+        <div className="card-actions justify-center">
+          <label
+            htmlFor="booking-modal"
+            disabled={slots.length === 0}
+            onClick={() => setTreatment(booking)}
+            className="btn btn-secondary text-white uppercase"
+          >
             Book Appointment
-          </button>
+          </label>
         </div>
       </div>
     </div>
