@@ -1,14 +1,53 @@
 import { format } from "date-fns";
 import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import swal from "sweetalert";
+import auth from "../../firebase.init";
 
 const BookingModal = ({ treatment, date, setTreatment }) => {
   const { name, slots, _id } = treatment;
-
+  const [user, loading, error] = useAuthState(auth);
+  const formattedDate = format(date, "PP");
+  console.log(formattedDate);
   const handleBooking = (e) => {
     e.preventDefault();
     const slot = e.target.slot.value;
     console.log(name, _id, slot);
-    setTreatment(null);
+
+    const booking = {
+      treatmentId: _id,
+      treatment: name,
+      date: formattedDate,
+      slot,
+      patient: user.email,
+      patientName: user.displayName,
+      phone: e.target.phone.value,
+    };
+
+    fetch("http://localhost:5000/booking", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(booking),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          swal(
+            "Appointment is set!",
+            `on ${formattedDate} at ${slot}`,
+            "success"
+          );
+        } else {
+          swal(
+            "Already have an Appointment",
+            ` on ${data.booking?.date} at ${data.booking?.slot}`,
+            "error"
+          );
+        }
+        setTreatment(null);
+      });
   };
   return (
     <div>
@@ -32,21 +71,28 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
               disabled
               className="input input-bordered w-full max-w-lg"
             />
-            <select name="slot" className="select select-bordered w-full max-w-lg">
-              {slots.map((slot) => (
-                <option  value={slot}>{slot}</option>
+            <select
+              name="slot"
+              className="select select-bordered w-full max-w-lg"
+            >
+              {slots.map((slot, index) => (
+                <option key={index} value={slot}>
+                  {slot}
+                </option>
               ))}
             </select>
             <input
               type="text"
-              placeholder="Your Name"
+              disabled
+              value={user?.displayName}
               name="name"
               className="input input-bordered w-full max-w-lg"
             />
             <input
               type="email"
               name="email"
-              placeholder="Your Email"
+              disabled
+              value={user?.email}
               className="input input-bordered w-full max-w-lg"
             />
             <input
