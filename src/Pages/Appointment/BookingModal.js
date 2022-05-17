@@ -4,7 +4,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import swal from "sweetalert";
 import auth from "../../firebase.init";
 
-const BookingModal = ({ treatment, date, setTreatment }) => {
+const BookingModal = ({ treatment, date, setTreatment, refetch }) => {
   const { name, slots, _id } = treatment;
   const [user, loading, error] = useAuthState(auth);
   const formattedDate = format(date, "PP");
@@ -46,6 +46,7 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
             "error"
           );
         }
+        refetch();
         setTreatment(null);
       });
   };
