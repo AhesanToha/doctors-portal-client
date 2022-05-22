@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   useCreateUserWithEmailAndPassword,
   useSignInWithGoogle,
@@ -8,12 +8,14 @@ import {
 import { useForm } from "react-hook-form";
 import auth from "../../firebase.init";
 import Loading from "../Shared/Loading";
+import useToken from "../../hooks/useToken";
 
 const SignUp = () => {
   const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
-  const [updateProfile, updating, updateError] = useUpdateProfile(auth);
+  const [updateProfile, updating] = useUpdateProfile(auth);
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
+  const [token] = useToken(user || gUser);
   const {
     register,
     formState: { errors },
@@ -22,7 +24,7 @@ const SignUp = () => {
   const navigate = useNavigate();
   let signInError;
 
-  if (gLoading || loading) {
+  if (gLoading || loading || updating) {
     return <Loading></Loading>;
   }
   if (gError || error) {
@@ -33,14 +35,12 @@ const SignUp = () => {
     );
   }
 
-  if (gUser || user) {
-    console.log(gUser || user);
+  if (token || user || gUser) {
+    navigate("/appointment");
   }
   const onSubmit = async (data) => {
     await createUserWithEmailAndPassword(data.email, data.password);
     await updateProfile({ displayName: data.name });
-
-    navigate("/appointment");
   };
   return (
     <div className="flex justify-center items-center h-screen">
@@ -97,7 +97,7 @@ const SignUp = () => {
                     {errors.email.message}
                   </span>
                 )}
-                {errors.email?.type === "patter" && (
+                {errors.email?.type === "pattern" && (
                   <span className="label-text-alt  text-red-600">
                     {errors.email.message}
                   </span>
